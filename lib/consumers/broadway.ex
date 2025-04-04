@@ -1,4 +1,4 @@
-defmodule FoodOrderPagamento.Broadway do
+defmodule FoodOrderPagamento.Consumers.Broadway do
   use Broadway
 
   alias Broadway.Message
