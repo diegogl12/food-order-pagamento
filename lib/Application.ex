@@ -1,5 +1,4 @@
 defmodule FoodOrderPagamento.Application do
-
   use Application
   require Logger
 
@@ -18,4 +17,3 @@ defmodule FoodOrderPagamento.Application do
 
   defp port, do: Application.get_env(:food_order_pagamento, :api) |> Keyword.get(:port)
 end
-
