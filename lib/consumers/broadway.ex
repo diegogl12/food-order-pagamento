@@ -2,12 +2,14 @@ defmodule FoodOrderPagamento.Consumers.Broadway do
   use Broadway
 
   alias Broadway.Message
+  alias FoodOrderPagamento.Consumers.NovoPedidoEventHandler
 
-  def start_link(_opts) do
+  def start_link(queue_name: queue_name) do
     Broadway.start_link(__MODULE__,
       name: __MODULE__,
+      context: queue_name,
       producer: [
-        module: {BroadwaySQS.Producer, queue_url: queue_url(), config: config()}
+        module: {BroadwaySQS.Producer, queue_url: queue_url(queue_name), config: config()}
       ],
       processors: [
         default: []
@@ -22,13 +24,13 @@ defmodule FoodOrderPagamento.Consumers.Broadway do
   end
 
   @impl true
-  def handle_message(_, %Message{} = message, _) do
-    IO.inspect("Handling Message:")
-    IO.inspect(message)
+  def handle_message(processor, %Message{} = message, :novo_pedido) do
+    NovoPedidoEventHandler.run(message)
     IO.inspect("=================")
     message
   end
 
+  def handle_message(_, _, _), do: IO.inspect("Message queue has no handler...")
   @impl true
   def handle_batch(_, messages, _, _) do
     IO.inspect("Handling Messages:")
@@ -54,13 +56,13 @@ defmodule FoodOrderPagamento.Consumers.Broadway do
       ]
     ]
 
-  defp queue_url do
+  defp queue_url(queue_name) do
     endpoint = Application.get_env(:food_order_pagamento, :aws) |> Keyword.get(:endpoint)
     account_id = Application.get_env(:food_order_pagamento, :aws) |> Keyword.get(:account_id)
 
     sqs_name =
       Application.get_env(:food_order_pagamento, :sqs)
-      |> Keyword.get(:novo_pedido)
+      |> Keyword.get(queue_name)
       |> Keyword.get(:name)
 
     "#{endpoint}/#{account_id}/#{sqs_name}"

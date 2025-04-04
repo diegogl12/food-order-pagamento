@@ -5,7 +5,7 @@ defmodule FoodOrderPagamento.Application do
   def start(_type, _args) do
     children = [
       {Plug.Cowboy, scheme: :http, plug: Endpoints, options: [port: port()]},
-      {FoodOrderPagamento.Consumers.Broadway, []}
+      {FoodOrderPagamento.Consumers.Broadway, [queue_name: :novo_pedido]}
     ]
 
     opts = [strategy: :one_for_one, name: FoodOrderPagamento.Supervisor]
