@@ -9,6 +9,6 @@ create_message:
   	--region us-east-1 \
   	--profile localstack
 
-run:
+up:
 	docker-compose down -v
 	docker-compose --env-file ./.env up --build
