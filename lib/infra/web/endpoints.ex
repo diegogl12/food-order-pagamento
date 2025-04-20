@@ -1,4 +1,4 @@
-defmodule Endpoints do
+defmodule FoodOrderPagamento.Infra.Web.Endpoints do
   use Plug.Router
   require Logger
 

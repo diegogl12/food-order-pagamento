@@ -22,14 +22,15 @@ defmodule FoodOrderPagamento.MixProject do
   defp deps do
     [
       {:broadway_sqs, "~> 0.7"},
+      {:ex_aws, "~> 2.1"},
+      {:ex_aws_sqs, "~> 3.0"},
       {:hackney, "~> 1.9"},
-      {:plug_cowboy, "~> 2.7.3"},
-      {:tesla, "~> 1.14"},
       {:jason, "~> 1.4.4"},
       {:mint, "~> 1.0"},
+      {:plug_cowboy, "~> 2.7.3"},
       {:req, "~> 0.4.0"},
-      {:ex_aws, "~> 2.1"},
-      {:ex_aws_sqs, "~> 3.0"}
+      {:tesla, "~> 1.14"},
+      {:uuid, "~> 1.1"}
     ]
   end
 end

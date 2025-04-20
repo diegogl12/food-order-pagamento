@@ -1,5 +1,5 @@
 message := '{"status":"Default Make Message"}'
-queue_name := novo-pedido
+queue_name := checkout
 
 create_message:
 	aws sqs send-message \

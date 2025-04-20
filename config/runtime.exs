@@ -1,9 +1,9 @@
 import Config
 
 config :food_order_pagamento, :sqs,
-  novo_pedido: [
+  checkout: [
     host: System.get_env("AWS_ENDPOINT"),
-    name: System.get_env("NOVO_PEDIDO_SQS_NAME")
+    name: System.get_env("CHECKOUT_SQS_NAME")
   ]
 
 config :food_order_pagamento, :aws,
