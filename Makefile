@@ -1,4 +1,4 @@
-message := '{"status":"Default Make Message"}'
+message := '{"order_id": "2d998c18-23ac-11f0-81ff-0242ac160004", "amount": 99.99, "customer_id": "65fa2a88-f524-4f50-bdd4-c3b8355db47e", "payment_method": "credit_card"}'
 queue_name := checkout
 
 create_message:

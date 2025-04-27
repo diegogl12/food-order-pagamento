@@ -1,7 +1,9 @@
 defmodule FoodOrderPagamento.Domain.Entities.Checkout do
-  defstruct [:order_id, :amount, :customer_id, :payment_method]
+  @derive {Jason.Encoder, only: [:id, :order_id, :amount, :customer_id, :payment_method]}
+  defstruct [:id, :order_id, :amount, :customer_id, :payment_method]
 
   @type t :: %__MODULE__{
+          id: String.t(),
           order_id: String.t(),
           amount: float(),
           customer_id: String.t(),

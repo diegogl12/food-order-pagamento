@@ -2,12 +2,22 @@ defmodule FoodOrderPagamento.UseCases.RequestPayment do
   require Logger
 
   alias FoodOrderPagamento.Domain.Entities.Checkout
+  alias FoodOrderPagamento.Domain.Entities.PaymentStatus
 
-  def execute(%Checkout{} = checkout, payment_gateway, payment_repository) do
-    with {:ok, gateway_response} <- payment_gateway.perform_payment(checkout),
-         {:ok, payment} <- create_payment(gateway_response, checkout),
-         {:ok, saved_payment} <- payment_repository.save(payment) do
-      Logger.info("Payment processed and saved successfully with ID: #{payment_id}")
+  def execute(
+        %Checkout{} = checkout,
+        payment_provider,
+        payment_repository,
+        payment_status_repository
+      ) do
+    with {:ok, payment_response} <- payment_provider.perform_payment(checkout),
+         {:ok, saved_payment} <- payment_repository.create(payment_response),
+         {:ok, _} <-
+           payment_status_repository.create(%PaymentStatus{
+             payment_id: saved_payment.id,
+             status: "Pagamento Pendente"
+           }) do
+      Logger.info("Payment processed and saved successfully with ID: #{saved_payment.id}")
 
       {:ok, saved_payment}
     else
@@ -16,13 +26,4 @@ defmodule FoodOrderPagamento.UseCases.RequestPayment do
         result
     end
   end
-
-  defp create_payment(%{payment_id: payment_id}, %Checkout{order_id: order_id, amount: amount}),
-    do:
-      Payment.new(%{
-        payment_id: payment_id,
-        order_id: order_id,
-        amount: amount,
-        status: "requested"
-      })
 end

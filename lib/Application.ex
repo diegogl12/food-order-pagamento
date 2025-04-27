@@ -4,6 +4,7 @@ defmodule FoodOrderPagamento.Application do
 
   def start(_type, _args) do
     children = [
+      FoodOrderPagamento.Infra.PagamentosRepo,
       {Plug.Cowboy,
        scheme: :http, plug: FoodOrderPagamento.Infra.Web.Endpoints, options: [port: port()]},
       {FoodOrderPagamento.Infra.Consumers.Broadway, [queue_name: :checkout]}

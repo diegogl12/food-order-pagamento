@@ -4,7 +4,6 @@ defmodule FoodOrderPagamento.Infra.Consumers.Broadway do
   use Broadway
 
   alias Broadway.Message
-  alias FoodOrderPagamento.InterfaceAdapters.Gateways.Events.Checkout
   alias FoodOrderPagamento.InterfaceAdapters.Controllers.PaymentController
 
   def start_link(queue_name: queue_name) do
@@ -30,11 +29,10 @@ defmodule FoodOrderPagamento.Infra.Consumers.Broadway do
   def handle_message(_processor, %Message{data: data} = message, :checkout) do
     Logger.info("Received message: #{inspect(data)}")
 
-    data
-    |> Jason.decode!()
-    |> PaymentController.request_payment()
+    result = PaymentController.request_payment(data)
 
-    Logger.info("Message processed: #{inspect(data)}")
+    Logger.info("Message processed: result #{inspect(result)}")
+    Logger.info("Message data: #{inspect(data)}")
 
     message
   end

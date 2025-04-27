@@ -1,4 +1,4 @@
-defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.DTOs.CheckoutDTO do
+defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTO do
   alias FoodOrderPagamento.Domain.Entities.Checkout
 
   defstruct [:order_id, :amount, :customer_id, :payment_method]
@@ -27,9 +27,16 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.DTOs.CheckoutDTO do
   end
 
   def from_map(map) when is_map(map) do
-    dto = struct(__MODULE__, map)
+    map_with_atoms =
+      map
+      |> Enum.map(fn {key, value} ->
+        {String.to_existing_atom(key), value}
+      end)
+
+    dto = struct(__MODULE__, map_with_atoms)
     {:ok, dto}
   rescue
+    ArgumentError -> {:error, "Invalid checkout data - unknown fields"}
     _ -> {:error, "Invalid checkout data"}
   end
 end
