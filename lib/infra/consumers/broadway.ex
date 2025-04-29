@@ -1,8 +1,10 @@
-defmodule FoodOrderPagamento.Consumers.Broadway do
+defmodule FoodOrderPagamento.Infra.Consumers.Broadway do
+  require Logger
+
   use Broadway
 
   alias Broadway.Message
-  alias FoodOrderPagamento.Consumers.NovoPedidoEventHandler
+  alias FoodOrderPagamento.InterfaceAdapters.Controllers.PaymentController
 
   def start_link(queue_name: queue_name) do
     Broadway.start_link(__MODULE__,
@@ -24,9 +26,14 @@ defmodule FoodOrderPagamento.Consumers.Broadway do
   end
 
   @impl true
-  def handle_message(processor, %Message{} = message, :novo_pedido) do
-    NovoPedidoEventHandler.run(message)
-    IO.inspect("=================")
+  def handle_message(_processor, %Message{data: data} = message, :checkout) do
+    Logger.info("Received message: #{inspect(data)}")
+
+    result = PaymentController.request_payment(data)
+
+    Logger.info("Message processed: result #{inspect(result)}")
+    Logger.info("Message data: #{inspect(data)}")
+
     message
   end
 

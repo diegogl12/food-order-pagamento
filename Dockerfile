@@ -12,4 +12,4 @@ RUN mix deps.get
 
 EXPOSE 4000
 
-CMD ["mix", "run", "--no-halt"]
+CMD ["mix", "run", "--no-halt", "--env", "prod"]
