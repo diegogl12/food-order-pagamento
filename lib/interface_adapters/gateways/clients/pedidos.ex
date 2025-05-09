@@ -4,7 +4,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.Pedidos do
   @impl true
   def update_payment_status(payment, payment_status) do
       client()
-      |> Tesla.put("/pedidos/atualizarStatusPedido", %{
+      |> Tesla.put("/pedidos/atualizarStatusPagamento", %{
         payment_id: payment.order_id,
         payment_status: payment_status.status
       })
@@ -14,6 +14,9 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.Pedidos do
 
       {:ok, %{status: _status, body: body}} ->
         {:error, body}
+
+      {:error, error} ->
+        {:error, error}
     end
   end
 

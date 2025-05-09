@@ -37,6 +37,11 @@ defmodule FoodOrderPagamento.Infra.Web.Endpoints do
         conn
         |> put_resp_content_type("application/json")
         |> send_resp(200, Jason.encode!(payment))
+
+      {:error, error} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(500, Jason.encode!(%{message: "Error getting payment: #{inspect(error)}"}))
     end
   end
 
