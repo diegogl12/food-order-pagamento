@@ -1,0 +1,22 @@
+name: Coverage
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+
+    env:
+      MIX_ENV: test
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.18.0' # Use a versão do Elixir do seu projeto
+          otp-version: '26.0' 
+      - run: mix deps.get
+      - run: mix coveralls.github
+      
