@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.18.0' # Use a versão do Elixir do seu projeto
+          otp-version: '26.0'
+      - run: mix deps.get
+      - run: mix compile
+      - run: mix release
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t food-order-pagamento .
+      - run: docker tag food-order-pagamento:latest diegogl12/food-order-pagamento:latest
+      - run: docker push diegogl12/food-order-pagamento:latest
