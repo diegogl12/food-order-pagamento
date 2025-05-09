@@ -56,11 +56,11 @@ defmodule FoodOrderPagamento.UseCases.UpdatePaymentStatusTest do
     test "returns error when payment is not found" do
       # Arrange
       payment_status_dto = %{
-        payment_id: "non-existent-id",
+        payment_id: "ext-123",
         status: "Pagamento Aprovado"
       }
 
-      Mox.expect(PaymentRepositoryMock, :find_by, fn [external_id: "non-existent-id"] ->
+      Mox.expect(PaymentRepositoryMock, :find_by, fn [external_id: "ext-123"] ->
         {:error, :not_found}
       end)
 

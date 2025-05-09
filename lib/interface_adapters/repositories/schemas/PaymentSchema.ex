@@ -3,13 +3,10 @@ defmodule FoodOrderPagamento.Infra.PagamentosRepo.Schemas.PaymentSchema do
 
   alias FoodOrderPagamento.Infra.PagamentosRepo.Schemas.PaymentStatusSchema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
-
   schema "payments" do
-    field(:order_id, :binary_id)
+    field(:order_id, :string)
     field(:external_id, :string)
-    field(:amount, :decimal)
+    field(:amount, :string)
     field(:payment_date, :naive_datetime)
     field(:payment_method, :string)
 

@@ -9,6 +9,10 @@ defmodule FoodOrderPagamento.UseCases.UpdatePaymentStatus do
          :ok <- order_gateway.update_payment_status(payment, updated_payment_status) do
       {:ok, updated_payment_status}
     else
+      {:error, {status, error}} ->
+        Logger.error("Error on UpdatePaymentStatus.execute status: #{inspect(status)} error: #{inspect(error)}")
+        {:error, "Error on service Pedidos"}
+
       {:error, error} ->
         Logger.error("Error on UpdatePaymentStatus.execute: #{inspect(error)}")
         {:error, error}
