@@ -12,8 +12,8 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.Pedidos do
       {:ok, %{status: status, body: _body}} when status >= 200 and status < 300 ->
         :ok
 
-      {:ok, %{status: _status, body: body}} ->
-        {:error, body}
+      {:ok, %{status: status, body: body}} ->
+        {:error, {status, body}}
 
       {:error, error} ->
         {:error, error}

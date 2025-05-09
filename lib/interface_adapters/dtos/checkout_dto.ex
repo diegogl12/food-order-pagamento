@@ -6,8 +6,8 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTO do
   @type t :: %__MODULE__{
           order_id: String.t(),
           amount: float(),
-          customer_id: String.t(),
-          payment_method: String.t()
+          customer_id: String.t() | nil,
+          payment_method: String.t() | nil
         }
 
   def to_domain(%__MODULE__{} = dto) do
@@ -32,11 +32,21 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTO do
       |> Enum.map(fn {key, value} ->
         {String.to_existing_atom(key), value}
       end)
+      |> Map.new()
 
-    dto = struct(__MODULE__, map_with_atoms)
+    dto = %__MODULE__{
+      order_id: map_with_atoms |> Map.get(:NumeroPedido) |> handle_value(),
+      amount: Map.get(map_with_atoms, :Preco) |> handle_value(),
+      payment_method: Map.get(map_with_atoms, :MetodoPagamento) |> handle_value()
+    }
+
     {:ok, dto}
   rescue
     ArgumentError -> {:error, "Invalid checkout data - unknown fields"}
     _ -> {:error, "Invalid checkout data"}
   end
+
+  defp handle_value(value) when is_binary(value), do: value
+  defp handle_value(value) when is_integer(value), do: Integer.to_string(value)
+  defp handle_value(_), do: nil
 end

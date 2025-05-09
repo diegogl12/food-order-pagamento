@@ -88,7 +88,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       result = Pedidos.update_payment_status(payment, payment_status)
 
       # Assert
-      assert {:error, ^error_response} = result
+      assert {:error, {404, ^error_response}} = result
     end
 
     test "returns error when API request fails" do
