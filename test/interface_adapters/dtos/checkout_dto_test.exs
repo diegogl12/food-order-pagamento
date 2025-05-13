@@ -10,23 +10,20 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTOTest do
 
   describe "from_json/1" do
     test "successfully converts valid JSON to DTO" do
-      # Arrange
       json_string = """
       {
-        "order_id": "order-123",
-        "amount": 100.0,
-        "customer_id": "customer-456",
-        "payment_method": "credit_card"
+        "NumeroPedido": "1",
+        "Preco": 0,
+        "MetodoPagamento": "credit_card"
       }
       """
 
       # Stub Jason.decode
       stub(Jason, :decode, fn ^json_string ->
         {:ok, %{
-          "order_id" => "order-123",
-          "amount" => 100.0,
-          "customer_id" => "customer-456",
-          "payment_method" => "credit_card"
+          "NumeroPedido" => "1",
+          "Preco" => 0,
+          "MetodoPagamento" => "credit_card"
         }}
       end)
 
@@ -35,9 +32,8 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTOTest do
 
       # Assert
       assert {:ok, %CheckoutDTO{
-        order_id: "order-123",
-        amount: 100.0,
-        customer_id: "customer-456",
+        order_id: "1",
+        amount: "0",
         payment_method: "credit_card"
       }} = result
     end
@@ -63,10 +59,9 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTOTest do
     test "successfully converts valid map to DTO" do
       # Arrange
       valid_map = %{
-        "order_id" => "order-123",
-        "amount" => 100.0,
-        "customer_id" => "customer-456",
-        "payment_method" => "credit_card"
+        "NumeroPedido" => "1",
+        "Preco" => 0,
+        "MetodoPagamento" => "credit_card"
       }
 
       # Act
@@ -74,9 +69,8 @@ defmodule FoodOrderPagamento.InterfaceAdapters.DTOs.CheckoutDTOTest do
 
       # Assert
       assert {:ok, %CheckoutDTO{
-        order_id: "order-123",
-        amount: 100.0,
-        customer_id: "customer-456",
+        order_id: "1",
+        amount: "0",
         payment_method: "credit_card"
       }} = result
     end

@@ -3,7 +3,7 @@ import Config
 config :food_order_pagamento, :api, port: 4000
 
 config :food_order_pagamento, FoodOrderPagamento.Infra.PagamentosRepo,
-  database: "food_order_pagamento_repo",
+  database: "foodorder_pagamento_db",
   username: "postgres",
   password: "postgres",
-  hostname: "food_order_database"
+  hostname: "postgres"

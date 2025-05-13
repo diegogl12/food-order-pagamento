@@ -5,7 +5,7 @@ defmodule FoodOrderPagamento.Domain.Entities.Checkout do
   @type t :: %__MODULE__{
           id: String.t(),
           order_id: String.t(),
-          amount: float(),
+          amount: String.t(),
           customer_id: String.t(),
           payment_method: String.t()
         }
@@ -19,7 +19,7 @@ defmodule FoodOrderPagamento.Domain.Entities.Checkout do
     cond do
       is_nil(checkout.order_id) -> {:error, "order_id is required"}
       is_nil(checkout.amount) -> {:error, "amount is required"}
-      checkout.amount <= 0 -> {:error, "amount must be positive"}
+      checkout.amount < 0 -> {:error, "amount must be positive"}
       true -> {:ok, checkout}
     end
   end

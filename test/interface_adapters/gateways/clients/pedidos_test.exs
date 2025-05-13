@@ -24,7 +24,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
@@ -34,10 +34,10 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       # Stub Tesla.put without pattern matching on the payload
       stub(Tesla, :put, fn client, path, payload ->
         assert client == mock_client
-        assert path == "/pedidos/atualizarStatusPagamento"
+        assert path == "/Pedido/AtualizarStatuspagamento"
         assert payload == %{
-          payment_id: payment.order_id,
-          payment_status: payment_status.status
+          numeroPedido: payment.order_id,
+          status: payment_status.status
         }
 
         {:ok, %{status: 200, body: %{message: "Status updated successfully"}}}
@@ -64,7 +64,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
@@ -75,10 +75,10 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       # Stub Tesla.put without pattern matching on the payload
       stub(Tesla, :put, fn client, path, payload ->
         assert client == mock_client
-        assert path == "/pedidos/atualizarStatusPagamento"
+        assert path == "/Pedido/AtualizarStatuspagamento"
         assert payload == %{
-          payment_id: payment.order_id,
-          payment_status: payment_status.status
+          numeroPedido: payment.order_id,
+          status: payment_status.status
         }
 
         {:ok, %{status: 404, body: error_response}}
@@ -88,7 +88,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       result = Pedidos.update_payment_status(payment, payment_status)
 
       # Assert
-      assert {:error, ^error_response} = result
+      assert {:error, {404, ^error_response}} = result
     end
 
     test "returns error when API request fails" do
@@ -105,7 +105,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
@@ -115,10 +115,10 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       # Stub Tesla.put without pattern matching on the payload
       stub(Tesla, :put, fn client, path, payload ->
         assert client == mock_client
-        assert path == "/pedidos/atualizarStatusPagamento"
+        assert path == "/Pedido/AtualizarStatuspagamento"
         assert payload == %{
-          payment_id: payment.order_id,
-          payment_status: payment_status.status
+          numeroPedido: payment.order_id,
+          status: payment_status.status
         }
 
         {:error, :connection_refused}

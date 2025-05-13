@@ -1,10 +1,10 @@
 import Config
 
 config :food_order_pagamento, FoodOrderPagamento.Infra.PagamentosRepo,
-  database: System.get_env("FOOD_ORDER_PAGAMENTO_DATABASE", "food_order_pagamento_repo"),
+  database: System.get_env("FOOD_ORDER_PAGAMENTO_DATABASE", "foodorder_pagamento_db"),
   username: System.get_env("FOOD_ORDER_PAGAMENTO_USERNAME", "postgres"),
   password: System.get_env("FOOD_ORDER_PAGAMENTO_PASSWORD", "postgres"),
-  hostname: System.get_env("FOOD_ORDER_PAGAMENTO_HOSTNAME", "food_order_database"),
+  hostname: System.get_env("FOOD_ORDER_PAGAMENTO_HOSTNAME", "postgres"),
   migration_primary_key: [type: :uuid]
 
 config :food_order_pagamento, ecto_repos: [FoodOrderPagamento.Infra.PagamentosRepo]
