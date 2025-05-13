@@ -24,7 +24,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
@@ -64,7 +64,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
@@ -105,7 +105,7 @@ defmodule FoodOrderPagamento.InterfaceAdapters.Gateways.Clients.PedidosTest do
       payment_status = %PaymentStatus{
         id: "status-123",
         payment_id: "payment-123",
-        status: "Pagamento Aprovado",
+        status: 0,
         created_at: ~N[2025-01-01 00:00:00]
       }
 
