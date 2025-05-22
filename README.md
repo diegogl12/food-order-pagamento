@@ -38,7 +38,6 @@ Além disso, expõe um endpoint para webhook para atualização de status do pga
 - [Food Order DB](https://github.com/nathaliaifurita/food-order-terraform-db)
 - [Food Order MongoDB](https://github.com/RafaelKamada/food-order-terraform-mongodb)
 
-
 ### :page_with_curl: Documentações
 - [Miro (todo planejamento do projeto)](https://miro.com/app/board/uXjVKhyEAME=/)
 
